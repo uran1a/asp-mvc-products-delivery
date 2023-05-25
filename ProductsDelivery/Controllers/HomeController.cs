@@ -86,7 +86,7 @@ namespace ProductsDelivery.Controllers
             await _orderService.DeleteProductInOrderAsync(order, serial);
             return RedirectToAction("Cart");
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

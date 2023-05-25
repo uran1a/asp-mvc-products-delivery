@@ -1,0 +1,109 @@
+﻿@model ICollection<ProductsDelivery.Models.Order>
+@{
+    Dictionary<int, List<Product>> uniqueProducts = ViewBag.UniqueProducts; 
+    List<SelectListItem> collectorItems = ViewBag.CollectorItems;
+    List<SelectListItem> devileryItems = ViewBag.DevileryItems;
+}
+<div class="faq-section section-fluid-270 section-top-gap-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="faq-content">
+                    <h3 class="title">Заказы</h3>
+                </div>
+            </div>
+        </div>
+        <div class="faq-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="faq-accordian">
+                        @if (@Model.Count == 0)
+                        {
+                            <h2>Нет заявок</h2>
+                        }
+                        else
+                        {
+                            @foreach(var order in @Model)
+                            {
+                                <div class="faq-accordian-single-item">
+                                    <input id="item-1" name="accordian-item" type="radio" checked="">
+                                    <label for="item-1">Заказ #@order.Id</label>
+                                    <div class="item-content">
+                                        <div class="table_page table-responsive" style="margin-bottom: 10px;">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Товар</th>
+                                                        <th>Компания</th>
+                                                        <th>Количество</th>
+                                                        <th>Цена</th>
+                                                        <th>Итого</th>
+                                                        <th>Удалить</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach(var product in uniqueProducts[order.Id])
+                                                {   
+                                                    <tr>
+                                                        <td style="min-width: 0;">@product.Title</td>
+                                                        <td style="min-width: 0;">@product.Brand</td>
+                                                        <td style="min-width: 0;">@product.Count</td>
+                                                        <td style="min-width: 0;">@product.Price</td>
+                                                        <td style="min-width: 0;">@product.Price * @product.Count</td>
+                                                        <td style="min-width: 0;"><a asp-action="DeleteProductInOrder" asp-controller="Home" asp-route-serial="@product.SerialCode"><img src="~/images/icons/trash_16.png" alt=""></a></td>
+                                                    </tr>
+                                                }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <p style="font-size: 16px">Статус: 
+                                            @if(@order.IsGenerated) {<text>| Сформирован | </text>}
+                                            @if(@order.IsPaid) {<span> Оплачен | </span>}
+                                            @if(@order.IsManaged) {<span> Обработан | </span>}
+                                            @if(@order.IsCollected) {<span> Собран | </span>}
+                                            @if(@order.IsDelivered) {<span> Доставлен | </span>}
+                                        </p>
+                                        <p style="font-size: 16px">Клиент: @order.User.Name @order.User.Surname @order.User.Patronymic</p>
+                                        <p style="font-size: 16px">Адрес: @order.User.Address</p>
+                                        @if (!@order.IsManaged)
+                                        {
+                                            <form asp-action="AcceptOrder" asp-controller="Manager" method="post">
+                                                <input type="hidden" name="orderId" value="@order.Id" />
+                                                <p for="collector" style="float: left; font-size: 16px;">Выберите сборщика: </p>
+                                                <p style="font-size: 16px">
+                                                    <select id="collector" name="collectorId" asp-items="collectorItems">
+                                                        <option value="0">Сборщик</option>
+                                                    </select>
+                                                </p>
+                                                <p for="delivery" style="float: left; font-size: 16px;">Выберите доставщика: </p>
+                                                <p style="font-size: 16px">
+                                                    <select id="delivery" name="deliveryId" asp-items="devileryItems">
+                                                        <option value="0">Доставщик</option>
+                                                    </select>
+                                                </p>
+                                                <p>
+                                                    <button class="btn btn-sm btn-radius btn-default mb-4">Принять</button>
+                                                </p>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            @if(order.Collector != null)
+                                            {
+                                                <p style="font-size: 16px">Сборщик: @order.Collector.Name @order.Collector.Surname @order.Collector.Patronymic</p>
+                                            }
+                                            @if(order.Delivery != null)
+                                            {
+                                                <p style="font-size: 16px">Доставщик: @order.Delivery.Name @order.Delivery.Surname @order.Delivery.Patronymic</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

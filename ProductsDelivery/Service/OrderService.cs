@@ -18,6 +18,12 @@ namespace ProductsDelivery.Service
                 .Include(o => o.User)
                 .Include(o => o.Products).SingleOrDefaultAsync(o => o.UserId == userid);
         }
+        public async Task<Order?> OrderFindByIdAsync(int id)
+        {
+            return await _db.Orders
+                .Include(o => o.User)
+                .Include(o => o.Products).SingleOrDefaultAsync(o => o.Id == id);
+        }
         public async Task<Order> CreateOrderAsync(int userId) 
         {
             var newOrder = new Order()
@@ -36,6 +42,17 @@ namespace ProductsDelivery.Service
                 .Include(o => o.Products).SingleOrDefault(o => o.Id == order.Entity.Id);
         }
 
+        internal async Task<List<Order>> OrdersForManagerAsync()
+        {
+            return await _db.Orders
+                .Include(o => o.Collector)
+                .Include(o => o.Delivery)
+                .Include(o => o.User)
+                .Include(o => o.Products)
+                .Where(o => o.IsGenerated)
+                .Where(o => o.IsPaid).ToListAsync();
+        }
+
         public async Task DeleteProductInOrderAsync(Order order, int serial)
         {
             var product = order.Products.FirstOrDefault(p => p.SerialCode == serial);
@@ -49,6 +66,19 @@ namespace ProductsDelivery.Service
         {
             _db.Orders.Update(order);
             await _db.SaveChangesAsync();
+        }
+
+        public async Task AddCollectorAndDeliveryAsync(int orderId, int collectorId, int deliveryId)
+        {
+            var order = await this.OrderFindByIdAsync(orderId);
+            if(order != null)
+            {
+                order.CollectorId = collectorId;
+                order.DeliveryId = deliveryId;
+                order.IsManaged = true;
+                _db.Orders.Update(order);
+                await _db.SaveChangesAsync();
+            }
         }
     }
 }

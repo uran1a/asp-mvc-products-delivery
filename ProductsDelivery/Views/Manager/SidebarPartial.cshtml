@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="nav-wrapper" style="background-color: #8FCC5C;">
+    <div class="logo-wrapper">
+    <div class="logo-img">
+        <a asp-action="Profile" asp-controller="Manager"><img src="~/images/icons/fast-delivery-64.png" alt=""></a>
+    </div>
+    </div>
+    <div class="navigation" id="nav">
+        <div class="nav-item active">
+            <a class="nav-item-title" asp-action="Orders" asp-controller="Manager" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-users" aria-hidden="true"></i>Заказы</a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-item-title" asp-action="Providers" asp-controller="Manager" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-building" aria-hidden="true"></i>Поставщики</a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-item-title" asp-action="Collectors" asp-controller="Manager" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa-file-text" aria-hidden="true"></i>Сборщики</a>
+        </div>
+         <div class="nav-item">
+            <a class="nav-item-title" asp-action="Deliveries" asp-controller="Manager" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa-file-text" aria-hidden="true"></i>Доставщики</a>
+        </div>
+        <div class="nav-item">
+            <a asp-action="Profile" asp-controller="Manager" class="nav-item-title" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-user-o" aria-hidden="true"></i>Профиль</a>
+        </div>
+        <div class="nav-item">
+            <a asp-action="Logout" asp-controller="Person" class="nav-item-title" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-sign-out" aria-hidden="true"></i>Выход</a>
+        </div>
+    </div>
+</div>

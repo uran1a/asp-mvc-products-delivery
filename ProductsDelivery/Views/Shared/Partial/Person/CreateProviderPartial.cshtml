@@ -1,5 +1,6 @@
-﻿@model ProductsDelivery.Models.User
-<form asp-action="CreateUser" asp-controller="Person" asp-anti-forgery="true">
+﻿@model ProductsDelivery.Models.Provider
+
+<form asp-action="CreateProvider" asp-controller="Manager" asp-anti-forgery="true">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div class="default-form-box">
         <label asp-for="Login">Логин <span>*</span></label>
@@ -22,9 +23,9 @@
         <span asp-validation-for="Surname" />
     </div>
     <div class="default-form-box">
-        <label asp-for="Surname">Отчество</label>
-        <input type="text" asp-for="Surname" />
-        <span asp-validation-for="Surname" />
+        <label asp-for="Patronymic">Отчество</label>
+        <input type="text" asp-for="Patronymic" />
+        <span asp-validation-for="Patronymic" />
     </div>
     <div class="default-form-box">
         <label asp-for="Data_Of_Birth">Дата рождения <span>*</span></label>
@@ -32,14 +33,14 @@
         <span asp-validation-for="Data_Of_Birth" />
     </div>
     <div class="default-form-box">
-        <label asp-for="Address">Адрес <span>*</span></label>
-        <input type="text" asp-for="Address" />
-        <span asp-validation-for="Address" />
-    </div>
-    <div class="default-form-box">
         <label asp-for="Mobile_Phone">Моб. телефон</label>
         <input type="text" asp-for="Mobile_Phone" />
         <span asp-validation-for="Mobile_Phone" />
+    </div>
+      <div class="default-form-box">
+        <label asp-for="LicenseNumber">Номер лицензии<span>*</span></label>
+        <input type="text" asp-for="LicenseNumber" />
+        <span asp-validation-for="LicenseNumber" />
     </div>
     <div class="login_submit">
         <button class="btn btn-sm btn-radius btn-default mb-4" type="submit">Создание</button>

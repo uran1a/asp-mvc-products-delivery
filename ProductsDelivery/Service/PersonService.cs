@@ -12,6 +12,7 @@ namespace ProductsDelivery.Service
             _db = dbContext;
             _logger = logger;
         }
+        //User
         public async Task<User?> UserFindById(int id)
         {
             var user = await _db.Users.SingleOrDefaultAsync(u => u.Id == id);
@@ -35,6 +36,83 @@ namespace ProductsDelivery.Service
             _db.Users.Update(user);
             await _db.SaveChangesAsync();
         }
+
+        //Collector
+        public List<Collector> AllCollectors() => _db.Collectors.ToList();
+        public async Task<Collector> CreateCollectorAsync(Collector collector)
+        {
+            var newCollector = _db.Collectors.Add(collector);
+            await _db.SaveChangesAsync();
+            if (newCollector != null)
+            {
+                _logger.LogInformation("Create collector with id = {0}", newCollector.Entity.Id);
+                return newCollector.Entity;
+            }
+            return null;
+        }
+        public async Task DeleteCollectorAsync(int id)
+        {
+            var collect = await _db.Collectors.Where(c => c.Id == id).SingleOrDefaultAsync();
+            _db.Collectors.Remove(collect);
+            await _db.SaveChangesAsync();
+        }
+
+        //Delivery
+        public List<Delivery> AllDeliveries() => _db.Deliveries.ToList();
+        public async Task<Delivery> CreateDeliveryAsync(Delivery delivery)
+        {
+            var newDelivery = _db.Deliveries.Add(delivery);
+            await _db.SaveChangesAsync();
+            if (newDelivery != null)
+            {
+                _logger.LogInformation("Create delivery with id = {0}", newDelivery.Entity.Id);
+                return newDelivery.Entity;
+            }
+            return null;
+        }
+        public async Task DeleteDeliveryAsync(int id)
+        {
+            var delivery = await _db.Deliveries.Where(d => d.Id == id).SingleOrDefaultAsync();
+            _db.Deliveries.Remove(delivery);
+            await _db.SaveChangesAsync();
+        }
+
+        //Delivery
+        public List<Provider> AllProviders() => _db.Providers.ToList();
+
+        internal async Task UpdateManagerAsync(Manager model)
+        {
+            _db.Managers.Update(model);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Provider> CreateProviderAsync(Provider provider)
+        {
+            var newProvider = _db.Providers.Add(provider);
+            await _db.SaveChangesAsync();
+            if (newProvider != null)
+            {
+                _logger.LogInformation("Create provider with id = {0}", newProvider.Entity.Id);
+                return newProvider.Entity;
+            }
+            return null;
+        }
+        public async Task DeleteProviderAsync(int id)
+        {
+            var provider = await _db.Providers.Where(d => d.Id == id).SingleOrDefaultAsync();
+            _db.Providers.Remove(provider);
+            await _db.SaveChangesAsync();
+        }
+
+        //Manager
+        public async Task<Manager> ManagerFindByIdAsync(int id)
+        {
+            var manager = await _db.Managers.SingleOrDefaultAsync(m => m.Id == id);
+            if (manager != null)
+                return manager;
+            else 
+                throw new ArgumentNullException();
+        }
         public async Task<Person> PersonWithLoginAsync(string login)
         {
             var person = await _db.People.FirstOrDefaultAsync(p => p.Login == login);
@@ -47,10 +125,9 @@ namespace ProductsDelivery.Service
         public async Task<Person> PersonByLoginAndPasswordAsync(string login, string password)
         {
             var person = await _db.People
-                .Where(p => p.Discriminator == "User")
                 .FirstOrDefaultAsync(a => a.Login == login && a.Password == password);
             if (person != null)
-                _logger.LogInformation("Get user with login = {0} and password {1}", person.Login, person.Password);
+                _logger.LogInformation("Get person with login = {0} and password {1}", person.Login, person.Password);
             return person;
         }
     }

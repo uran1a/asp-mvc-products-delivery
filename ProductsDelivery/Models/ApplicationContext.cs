@@ -7,6 +7,7 @@ namespace ProductsDelivery.Models
         public DbSet<Person> People { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<Collector> Collectors { get; set; } = null!;
         public DbSet<Delivery> Deliveries { get; set; } = null!;
         public DbSet<Manager> Managers { get; set; } = null!;
         public DbSet<Provider> Providers { get; set; } = null!;

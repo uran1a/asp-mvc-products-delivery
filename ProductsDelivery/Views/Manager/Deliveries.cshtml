@@ -1,0 +1,44 @@
+﻿@model ICollection<ProductsDelivery.Models.Delivery>
+@{
+}
+<div class="body-wrapper container-fluid p-0">
+    <!-- content area -->
+    <div class="content-wrapper" style="margin-left: 0px;">
+        <div class="doc-hero-wrap">
+            <div class="hero-wrap-inner">
+                <h2 class="title">Доставщики</h2>
+            </div>
+        </div>
+            <!-- Getting start -->
+        <div class="content-section" id="users" style="display: block;">
+            <div class="table_page table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Логин</th>
+                        <th>Пароль</th>
+                        <th>ФИО</th>
+                        <th>Вид транспорта</th>
+                        <th>Удаление</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var delivery in @Model)
+                    {   
+                        <tr>
+                            <td style="min-width: 0; text-transform: none;">@delivery.Id</td>
+                            <td style="min-width: 0; text-transform: none;">@delivery.Login</td>
+                            <td style="min-width: 0; text-transform: none;">@delivery.Password</td>
+                            <td style="min-width: 0; text-transform: none;">@delivery.Surname @delivery.Name @delivery.Patronymic</td>
+                            <td style="min-width: 0; text-transform: none;">@delivery.TypeTransport</td>
+                            <td style="min-width: 0; text-transform: none;"><a asp-action="DeleteDelivery" asp-controller="Manager" asp-route-id="@delivery.Id"><img src="~/images/icons/trash_16.png" alt=""></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a class="btn btn-sm btn-default-outline mt-3" asp-action="CreateDelivery" asp-controller="Manager">Добавить</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿        using Microsoft.AspNetCore.Mvc;
 using ProductsDelivery.Service;
 using ProductsDelivery.Models;
 using System.Security.Claims;
@@ -27,7 +27,7 @@ namespace ProductsDelivery.Controllers
             {
                 await Authenticate(person);
                 if (person.Discriminator == "User") return RedirectToAction("Index", "Home");
-                /*else if (person.Role.Name == "admin") return RedirectToAction("Index", "Admin");*/
+                else if (person.Discriminator == "Manager") return RedirectToAction("Orders", "Manager");
             }
             ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             return View(model);
