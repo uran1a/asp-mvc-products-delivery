@@ -1,0 +1,62 @@
+﻿@model ProductsDelivery.Models.Order
+@{
+    List<Product> uniqueProducts =  ViewBag.UniqueProducts;
+    int amount = ViewBag.Amount;
+}
+
+<div class="account-dashboard section-fluid-270 section-top-gap-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="tab-content dashboard_content">
+                    <h2>Оформление заказа</h2>
+                    <div class="tab-pane fade active col-lg-12" id="physical-entity">
+                       @if(@Model.Products.Count == 0)
+                        {
+                            <h2>Корзина пуста</h2>
+                        }
+                        else
+                        {
+                            <div class="table_page table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Товар</th>
+                                            <th>Компания</th>
+                                            <th>Количество</th>
+                                            <th>Цена</th>
+                                            <th>Итого</th>
+                                            <th>Удалить</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach(var product in uniqueProducts)
+                                    {   
+                                        <tr>
+                                            <td style="min-width: 0;">@product.Title</td>
+                                            <td style="min-width: 0;">@product.Brand</td>
+                                            <td style="min-width: 0;">@product.Count</td>
+                                            <td style="min-width: 0;">@product.Price</td>
+                                            <td style="min-width: 0;">@product.Price * @product.Count</td>
+                                            <td style="min-width: 0;"><a asp-action="DeleteProductInOrder" asp-controller="Home" asp-route-serial="@product.SerialCode"><img src="~/images/icons/trash_16.png" alt=""></a></td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+        
+                            </div>
+                        }
+                        <h4 style="text-transform: none; margin-top: 15px;">Сумма к оплате: <span>@amount руб</span>.</h4>
+                        <label for="pay" style="font-size: 22px; margin-bottom: 15px;"><b>Способ оплаты: </b></label>
+                        <select @*asp-for="TypeFilter"*@ id="pay" style="font-size: 18px" >
+                            <option style="font-size: 18px;">Безналичные</option>
+                            <option style="font-size: 18px;">Наличные</option>
+                        </select>
+                        <h4>Адрес: @Model.User.Address</h4>
+                        <a class="btn btn-sm btn-default-outline mt-3" asp-action="Processes" asp-controller="Home">Заказать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

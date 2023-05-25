@@ -56,6 +56,17 @@ namespace ProductsDelivery.Controllers
             }
             return RedirectToAction("Register", model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateUser(User model)
+        {
+            if (model == null)
+                return RedirectToAction("Profile", "Home");
+            else
+                await _personService.UpdateUser(model);
+            return RedirectToAction("Profile", "Home");
+        }
         private async Task Authenticate(Person person)
         {
             var claims = new List<Claim>

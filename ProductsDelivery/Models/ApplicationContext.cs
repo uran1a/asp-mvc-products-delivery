@@ -28,6 +28,16 @@ namespace ProductsDelivery.Models
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId);
 
+            modelBuilder.Entity<Order>()
+               .HasOne(o => o.Collector)
+               .WithMany(u => u.Orders)
+               .HasForeignKey(o => o.CollectorId);
+
+            modelBuilder.Entity<Order>()
+               .HasOne(o => o.Delivery)
+               .WithMany(u => u.Orders)
+               .HasForeignKey(o => o.DeliveryId);
+
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Order)
                 .WithMany(o => o.Products)

@@ -32,12 +32,21 @@ namespace ProductsDelivery.Service
             }
             return uniqueProducts;
         }
+
+        public int AmountProducts(List<Product> products)
+        {
+            int amount = 0;
+            foreach(var product in products)
+                amount += product.Price;
+            return amount;
+        }
+
         public async Task<Product> ProductFindByIdAsync(int id)
         {
             return await _db.Products.SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        internal async Task UpdateOrderIdAsync(int orderId, int serialCode, int count)
+        public async Task UpdateOrderIdAsync(int orderId, int serialCode, int count)
         {
             var products = _db.Products.Where(p => p.SerialCode == serialCode).ToList();
             for(int i = 0; i < count; i++)
@@ -47,7 +56,21 @@ namespace ProductsDelivery.Service
             }
             await _db.SaveChangesAsync();
         }
-
+        public List<Product> UniqueProducts(List<Product> products)
+        {
+            List<int> uniqueSerialCode = products
+                .GroupBy(p => p.SerialCode)
+                .Select(p => p.Key).ToList();
+            List<Product> uniqueProducts = new List<Product>();
+            foreach (var serialCode in uniqueSerialCode)
+            {
+                List<Product> p = products.Where(p => p.SerialCode == serialCode).ToList();
+                Product product = p.First();
+                product.Count = p.Count;
+                uniqueProducts.Add(product);
+            }
+            return uniqueProducts;
+        }
         public async Task UpdateCountProductAsync(Product product, int count)
         {
             /*product.Count = product.Count - count;*/

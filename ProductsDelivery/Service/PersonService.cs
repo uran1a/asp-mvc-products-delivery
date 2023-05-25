@@ -5,17 +5,24 @@ namespace ProductsDelivery.Service
 {
     public class PersonService
     {
-        private readonly ApplicationContext _dbContext;
+        private readonly ApplicationContext _db;
         private readonly ILogger<PersonService> _logger; 
         public PersonService(ApplicationContext dbContext, ILogger<PersonService> logger)
         {
-            _dbContext = dbContext;
+            _db = dbContext;
             _logger = logger;
+        }
+        public async Task<User?> UserFindById(int id)
+        {
+            var user = await _db.Users.SingleOrDefaultAsync(u => u.Id == id);
+            if (user != null)
+                return user;
+            return null;
         }
         public async Task<Person> CreateUserAsync(User user)
         {
-            var newUser = _dbContext.People.Add(user);
-            await _dbContext.SaveChangesAsync();
+            var newUser = _db.People.Add(user);
+            await _db.SaveChangesAsync();
             if (newUser != null)
             {
                 _logger.LogInformation("Create user with id = {0}", newUser.Entity.Id);
@@ -23,9 +30,14 @@ namespace ProductsDelivery.Service
             }
             return null;
         }
+        public async Task UpdateUser(User user)
+        {
+            _db.Users.Update(user);
+            await _db.SaveChangesAsync();
+        }
         public async Task<Person> PersonWithLoginAsync(string login)
         {
-            var person = await _dbContext.People.FirstOrDefaultAsync(p => p.Login == login);
+            var person = await _db.People.FirstOrDefaultAsync(p => p.Login == login);
             if (person != null)
                 _logger.LogInformation("Get users with login = {0}", login);
             else
@@ -34,7 +46,7 @@ namespace ProductsDelivery.Service
         }
         public async Task<Person> PersonByLoginAndPasswordAsync(string login, string password)
         {
-            var person = await _dbContext.People
+            var person = await _db.People
                 .Where(p => p.Discriminator == "User")
                 .FirstOrDefaultAsync(a => a.Login == login && a.Password == password);
             if (person != null)

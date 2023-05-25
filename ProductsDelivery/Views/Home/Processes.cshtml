@@ -1,0 +1,35 @@
+﻿@model ProductsDelivery.Models.Order
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="account-dashboard section-fluid-750 section-top-gap-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="dashboard_tab_button">
+                    <h3>Заказ #@Model.Id</h3>
+                    <h4>Процесс доставки продуктов:</h4>
+                    <ul role="tablist" class="nav flex-column dashboard-list">
+                        <li><p class="nav-link btn btn-sm btn-default-outline active" style="text-align: center; background-color: 
+                                                                                                @if(Model.IsGenerated){ <text> #8FCC5C</text> } else{ <text> #CB7458</text> };">Сформирован</p></li>
+                        <li><p class="nav-link btn btn-sm btn-default-outline active" style="text-align: center; background-color: 
+                                                                                                @if(Model.IsPaid){ <text> #8FCC5C</text> } else{ <text> #CB7458</text> };">Оплачен</p></li>
+                        <li><p class="nav-link btn btn-sm btn-default-outline active" style="text-align: center; background-color: 
+                                                                                                @if(Model.IsManaged){ <text> #8FCC5C</text> } else{ <text> #CB7458</text> };">Обработан</p></li>
+                        <li><p class="nav-link btn btn-sm btn-default-outline active" style="text-align: center; background-color: 
+                                                                                                @if(Model.IsCollected){ <text> #8FCC5C</text> } else{ <text> #CB7458</text> };">Собран</p></li>
+                        <li><p class="nav-link btn btn-sm btn-default-outline active" style="text-align: center; background-color: 
+                                                                                                @if(Model.IsDelivered){ <text> #8FCC5C</text> } else{ <text> #CB7458</text> };">Доставлен</p></li>
+                    </ul>
+                    @if (Model.IsDelivered)
+                    {
+                        <h4>Спасибо за использование нашего сервиса!</h4>
+                        <h4>Чек: file.docx</h4>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
