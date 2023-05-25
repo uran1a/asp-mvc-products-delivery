@@ -1,0 +1,93 @@
+﻿@model ICollection<ProductsDelivery.Models.Product>
+@{
+}
+<!-- ...:::: Start Shop List Section:::... -->
+<div class="shop-list-section section-fluid-270 section-top-gap-100">
+    <div class="box-wrapper">
+        <div class="shop-list-wrapper">
+            <div class="container-fluid">
+                <div class="row" style="width: 100%">
+                    <!-- Start Sidebar Area -->
+                    @*@await Html.PartialAsync("SidebarPartial", filterModel)*@
+                    <!-- End Sidebar Area -->
+                        <div class="product-shop-list-items">
+                            <div class="row mb-n25">
+                                @foreach(var product in Model)
+                                {
+                                    <div class="col-md-4 col-12 mb-25">
+                                        <div class="product-single-item-style-1">
+                                            <a class="image img-responsive" href="#">
+                                                @*
+                                                @if(product.Images != null && product.Images.Count > 0)
+                                                {
+                                                    <img class="img-fluid" style="width:435px; height:350px;" src="data:image/jpeg;base64,@(Convert.ToBase64String(@item.Images[0].Content))" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="img-fluid" src="~/images/products/default/product-default-style-1-img-1.webp" alt="">
+                                                }
+                                                *@
+                                                <img class="img-fluid" src="~/images/products/product-default-style-1-img-1.webp" alt="">
+
+                                            </a>
+                                            <div class="content">
+                                                <div class="top">
+                                                    <span class="catagory">@product.Brand</span><br/>
+                                                    <h4 class="title"><a href="product-details-default.html">@product.Title</a></h4>
+                                                    <span class="price">@product.Price руб.</span>
+                                                </div>
+                                                <div class="bottom">
+                                                    <div class="product-event-items">
+                                                        @*<div class="num-block skin-2" style="margin-right: 15px">
+                                                            <div class="num-in">
+                                                                <span class="minus dis"></span>
+                                                                <input type="text"  value="1" min-value="1" max-value="@product.Count" readonly="">
+                                                                <span class="plus"></span>
+                                                            </div>
+                                                        </div>*@
+                                                        <form asp-action="AddProduct" asp-controller="Home" method="post">
+                                                            <input type="hidden" name="serialCode" value="@product.SerialCode">
+                                                            <input type="number" name="count" value="1" min="1" max="@product.Count" style="width:auto; border: 2px solid #70C951; min-width: 75px; border-radius: 30px; font-size: 16px; font-weight: 700; text-align: center; margin-right: 10px;" >
+                                                            <button class="btn cart-btn" style="width:auto; padding: 9px 12.5px; border: 2px solid #70C951; text-transform: none;">Добавить в заказ</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <!-- Start Pagination -->
+                        <div class="d-flex justify-content-center">
+                            <ul class="page-pagination">
+                                @*<li class="icon-direction icon-direction--prev">
+                                    @if (Model.PageViewModel.HasPreviousPage)
+                                    {
+                                        <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)"><span class="material-icons-outlined">arrow_left</span></a>
+                                    }
+                                    else
+                                    {
+                                        <a><span class="material-icons-outlined" style="visibility: hidden;">arrow_left</span></a>
+                                    }
+                                </li>
+                                <li><a asp-action="Index">@Model.PageViewModel.PageNumber</a></li>
+                                <li class="icon-direction icon-direction--next">
+                                    @if (Model.PageViewModel.HasNextPage)
+                                    {
+                                        <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber + 1)"><span class="material-icons-outlined">arrow_right</span></a>
+                                    }
+                                    else
+                                    {
+                                        <a><span class="material-icons-outlined" style="visibility: hidden;">arrow_right</span></a>
+                                    }
+                                </li>*@
+                            </ul>
+                        </div>
+                        <!-- End Pagination -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- ...:::: End Shop List Section:::... -->
