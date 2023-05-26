@@ -76,7 +76,7 @@ h4,
 h5,
 h6 {
   font-family: "Lato", sans-serif;
-  color: #1D3557;
+  color: #111111;
 }
 
 ol,
@@ -1098,6 +1098,35 @@ input, textarea {
         padding-right: 500px;
     }
 }
+
+@media (min-width: 576px) {
+    .section-fluid-750 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .section-fluid-750 {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .section-fluid-750 {
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .section-fluid-750 {
+        padding-left: 450px;
+        padding-right: 450px;
+    }
+}
+
 @media (min-width: 1800px) {
     .section-fluid-750 {
         padding-left: 750px;

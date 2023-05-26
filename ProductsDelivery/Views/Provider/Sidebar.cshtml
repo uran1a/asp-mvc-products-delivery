@@ -1,0 +1,24 @@
+﻿@{
+
+}
+<div class="nav-wrapper" style="background-color: #8FCC5C;">
+    <div class="logo-wrapper">
+    <div class="logo-img">
+        <a asp-action="Profile" asp-controller="Collector"><img src="~/images/icons/fast-delivery-64.png" alt=""></a>
+    </div>
+    </div>
+    <div class="navigation" id="nav">
+        <div class="nav-item active">
+            <a class="nav-item-title" asp-action="Orders" asp-controller="Provider" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-users" aria-hidden="true"></i>Заявки</a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-item-title" asp-action="Products" asp-controller="Provider" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-building" aria-hidden="true"></i>Товары</a>
+        </div>
+        <div class="nav-item">
+            <a asp-action="Profile" asp-controller="Provider" class="nav-item-title" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-user-o" aria-hidden="true"></i>Профиль</a>
+        </div>
+        <div class="nav-item">
+            <a asp-action="Logout" asp-controller="Person" class="nav-item-title" style="background: #77995A; border-bottom: 1px solid #8FCC5C;"><i class="fa fa-sign-out" aria-hidden="true"></i>Выход</a>
+        </div>
+    </div>
+</div>s

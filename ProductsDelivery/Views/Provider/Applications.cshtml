@@ -1,13 +1,10 @@
-﻿@model ICollection<ProductsDelivery.Models.Order>
-@{
-    Dictionary<int, List<Product>> uniqueProducts = ViewBag.UniqueProducts; 
-}
+﻿@model ICollection<ProductsDelivery.Models.Application>
 <div class="faq-section section-fluid-270 section-top-gap-100">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="faq-content">
-                    <h3 class="title">Собранные заказы</h3>
+                    <h3 class="title">Заявки на поставку продуктов</h3>
                 </div>
             </div>
         </div>
@@ -17,17 +14,18 @@
                     <div class="faq-accordian">
                         @if (@Model.Count == 0)
                         {
-                            <h2>Нет собранных заказов</h2>
+                            <h2>Нет заяков</h2>
                         }
                         else
                         {
-                            @foreach(var order in @Model)
+                            @foreach(var application in @Model)
                             {
                                 <div class="faq-accordian-single-item">
-                                    <input id="item-@order.Id" name="accordian-item" type="radio" checked="">
-                                    <label for="item-@order.Id">Заказ #@order.Id</label>
+                                    <input id="item-@application.Id" name="accordian-item" type="radio" checked="">
+                                    <label for="item-@application.Id">Заказ #@application.Id</label>
                                     <div class="item-content">
                                         <div class="table_page table-responsive" style="margin-bottom: 10px;">
+                                            <div class="validation" asp-validation-summary="ModelOnly"></div>
                                             <table>
                                                 <thead>
                                                     <tr>
@@ -37,16 +35,17 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach(var product in uniqueProducts[order.Id])
-                                                {   
                                                     <tr>
-                                                        <td style="min-width: 0;">@product.Title</td>
-                                                        <td style="min-width: 0;">@product.Brand</td>   
-                                                        <td style="min-width: 0;">@product.Count</td>
+                                                        <td style="min-width: 0;">@application.Product.Title</td>
+                                                        <td style="min-width: 0;">@application.Product.Brand</td>   
+                                                        <td style="min-width: 0;">@application.Product.Count</td>
                                                     </tr>
-                                                }
                                                 </tbody>
                                             </table>
+                                            <p>
+                                                <a asp-action="AcceptApplication" asp-controller="Provider" asp-route-id="@application.Id" class="btn btn-sm btn-radius btn-default mb-4">Принять</a>
+                                                <a asp-action="CancelApplication" asp-controller="Provider" asp-route-id="@application.Id" class="btn btn-sm btn-radius btn-default mb-4">Отклонить</a>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

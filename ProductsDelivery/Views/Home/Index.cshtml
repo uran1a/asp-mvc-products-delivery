@@ -17,18 +17,15 @@
                                     <div class="col-md-4 col-12 mb-25">
                                         <div class="product-single-item-style-1">
                                             <a class="image img-responsive" href="#">
-                                                @*
-                                                @if(product.Images != null && product.Images.Count > 0)
+                                                
+                                                @if(product.Content.Length > 0)
                                                 {
-                                                    <img class="img-fluid" style="width:435px; height:350px;" src="data:image/jpeg;base64,@(Convert.ToBase64String(@item.Images[0].Content))" />
+                                                    <img class="img-fluid" style="width:435px; height:350px;" src="data:image/jpeg;base64,@(Convert.ToBase64String(product.Content))" />
                                                 }
                                                 else
                                                 {
-                                                    <img class="img-fluid" src="~/images/products/default/product-default-style-1-img-1.webp" alt="">
+                                                    <img class="img-fluid" src="~/images/products/product-default-style-1-img-1.webp" alt="">
                                                 }
-                                                *@
-                                                <img class="img-fluid" src="~/images/products/product-default-style-1-img-1.webp" alt="">
-
                                             </a>
                                             <div class="content">
                                                 <div class="top">

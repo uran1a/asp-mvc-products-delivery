@@ -15,10 +15,15 @@ namespace ProductsDelivery.Models
         [NotMapped]
         public int Count { get; set; }
         [Required]
+        public byte[] Content { get; set; } = null!;
+        [Required]
         public int ProviderId { get; set; }
         [Required]
         public Provider Provider { get; set; } = null!;
         public int? OrderId { get; set; }
         public Order? Order { get; set; }
+        [Required]
+        public virtual List<Application> Applications { get; set; } = null!;
+
     }
 }

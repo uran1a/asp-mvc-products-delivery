@@ -22,6 +22,8 @@ namespace ProductsDelivery.Models
         [Required]
         public bool IsManaged { get; set; } = false;
         [Required]
+        public bool IsFinished { get; set; } = false;
+        [Required]
         public int UserId { get; set; }
         [Required]
         public User User { get; set; } = null!;

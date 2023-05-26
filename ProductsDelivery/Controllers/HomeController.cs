@@ -31,7 +31,7 @@ namespace ProductsDelivery.Controllers
         }
         public async Task<IActionResult> Processes()
         {
-            var order = await _orderService.OrderFindByUserIdAsync(int.Parse(User.Identity!.Name!));
+            var order = await _orderService.OrderFindByUserIdAndNotFinishedAsync(int.Parse(User.Identity!.Name!));
             if(order != null)
             {
                 if(order.IsGenerated == false)
@@ -46,9 +46,9 @@ namespace ProductsDelivery.Controllers
         }
         public async Task<IActionResult> Cart()
         {
-            var order = await _orderService.OrderFindByUserIdAsync(int.Parse(User.Identity!.Name!));
+            var order = await _orderService.OrderFindByUserIdAndNotFinishedAsync(int.Parse(User.Identity!.Name!));
             if (order != null)
-            {
+            {       
                 if (order.IsGenerated == true)
                 {
                     return RedirectToAction("Processes");
@@ -74,7 +74,7 @@ namespace ProductsDelivery.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProduct(int serialCode, int count)
         {
-            var order = await _orderService.OrderFindByUserIdAsync(int.Parse(User.Identity!.Name!));
+            var order = await _orderService.OrderFindByUserIdAndNotFinishedAsync(int.Parse(User.Identity!.Name!));
             if (order == null)
                 order = await _orderService.CreateOrderAsync(int.Parse(User.Identity!.Name!));
             await _productService.UpdateOrderIdAsync(order.Id, serialCode, count);
@@ -86,7 +86,18 @@ namespace ProductsDelivery.Controllers
             await _orderService.DeleteProductInOrderAsync(order, serial);
             return RedirectToAction("Cart");
         }
-        
+
+        public async Task<IActionResult> FinishedOrder(int id)
+        {
+            var order = await _orderService.OrderFindByIdAsync(id);
+            if (order != null)
+            {
+                order.IsFinished = true;
+                await _orderService.UpdateAsync(order);
+            }
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();

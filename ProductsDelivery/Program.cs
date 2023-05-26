@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationContext>(optionsBuilder => optionsBuild
 builder.Services.AddScoped<PersonService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<ApplicationService>();
 //установка конфигурации подключения cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();

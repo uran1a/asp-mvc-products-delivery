@@ -12,6 +12,7 @@ namespace ProductsDelivery.Models
         public DbSet<Manager> Managers { get; set; } = null!;
         public DbSet<Provider> Providers { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Application> Applications { get; set; } = null!;
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             //Database.EnsureDeleted();
@@ -43,6 +44,16 @@ namespace ProductsDelivery.Models
                 .HasOne(p => p.Order)
                 .WithMany(o => o.Products)
                 .HasForeignKey(p => p.OrderId);
+
+            modelBuilder.Entity<Application>()
+                .HasOne(a => a.Product)
+                .WithMany(p => p.Applications)
+                .HasForeignKey(a => a.ProductId);
+
+            modelBuilder.Entity<Application>()
+                .HasOne(a => a.Product)
+                .WithMany(p => p.Applications)
+                .HasForeignKey(a => a.ProviderId);
         }
     }
 }

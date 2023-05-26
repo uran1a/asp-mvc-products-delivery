@@ -76,20 +76,29 @@ namespace ProductsDelivery.Service
             _db.Deliveries.Remove(delivery);
             await _db.SaveChangesAsync();
         }
-
         public async Task<Collector> CollectorFindById(int id)
         {
             var collector = await _db.Collectors.SingleOrDefaultAsync(c => c.Id == id);
             if (collector != null) return collector;
             else throw new ArgumentNullException();
         }
-
+        public async Task<Delivery> DeliveryFindById(int id)
+        {
+            var delivery = await _db.Deliveries.SingleOrDefaultAsync(d => d.Id == id);
+            if (delivery != null) return delivery;
+            else throw new ArgumentNullException();
+        }
         public async Task UpdateCollectorAsync(Collector model)
         {
             _db.Collectors.Update(model);
             await _db.SaveChangesAsync();
         }
-
+        public async Task UpdateDeliveryAsync(Delivery model)
+        {
+            _db.Deliveries.Update(model);
+            await _db.SaveChangesAsync();
+        }
+        
         //Delivery
         public List<Provider> AllProviders() => _db.Providers.ToList();
 

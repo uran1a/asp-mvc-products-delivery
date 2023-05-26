@@ -8,5 +8,7 @@ namespace ProductsDelivery.Models
         public string LicenseNumber { get; set; } = null!;
         [Required]
         public virtual List<Product> Products { get; set; } = null!;
+        [Required]
+        public virtual List<Application> Applications { get; set; } = null!;
     }
 }   

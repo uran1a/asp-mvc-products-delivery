@@ -26,8 +26,8 @@
                             @foreach(var order in @Model)
                             {
                                 <div class="faq-accordian-single-item">
-                                    <input id="item-1" name="accordian-item" type="radio" checked="">
-                                    <label for="item-1">Заказ #@order.Id</label>
+                                    <input id="item-@order.Id" name="accordian-item" type="radio" checked="">
+                                    <label for="item-@order.Id">Заказ #@order.Id</label>
                                     <div class="item-content">
                                         <div class="table_page table-responsive" style="margin-bottom: 10px;">
                                             <table>
@@ -38,7 +38,10 @@
                                                         <th>Количество</th>
                                                         <th>Цена</th>
                                                         <th>Итого</th>
-                                                        <th>Удалить</th>
+                                                        @if (!@order.IsManaged)
+                                                        {
+                                                            <th>Удалить</th>
+                                                        }
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -49,9 +52,12 @@
                                                         <td style="min-width: 0;">@product.Brand</td>
                                                         <td style="min-width: 0;">@product.Count</td>
                                                         <td style="min-width: 0;">@product.Price</td>
-                                                        <td style="min-width: 0;">@product.Price * @product.Count</td>
-                                                        <td style="min-width: 0;"><a asp-action="DeleteProductInOrder" asp-controller="Home" asp-route-serial="@product.SerialCode"><img src="~/images/icons/trash_16.png" alt=""></a></td>
-                                                    </tr>
+                                                        <td style="min-width: 0;">@(product.Price * product.Count)</td>
+                                                        @if (!@order.IsManaged)
+                                                        {
+                                                            <td style="min-width: 0;"><a asp-action="DeleteProductInOrder" asp-controller="Home" asp-route-serial="@product.SerialCode"><img src="~/images/icons/trash_16.png" alt=""></a></td>
+                                                        }
+                                                        </tr>
                                                 }
                                                 </tbody>
                                             </table>
@@ -82,7 +88,7 @@
                                                     </select>
                                                 </p>
                                                 <p>
-                                                    <button class="btn btn-sm btn-radius btn-default mb-4">Принять</button>
+                                                    <button class="btn btn-sm btn-radius btn-default">Принять</button>
                                                 </p>
                                             </form>
                                         }

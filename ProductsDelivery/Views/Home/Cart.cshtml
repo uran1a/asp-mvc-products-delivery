@@ -37,7 +37,7 @@
                                             <td style="min-width: 0;">@product.Brand</td>
                                             <td style="min-width: 0;">@product.Count</td>
                                             <td style="min-width: 0;">@product.Price</td>
-                                            <td style="min-width: 0;">@product.Price * @product.Count</td>
+                                            <td style="min-width: 0;">@(product.Price * product.Count)</td>
                                             <td style="min-width: 0;"><a asp-action="DeleteProductInOrder" asp-controller="Home" asp-route-serial="@product.SerialCode"><img src="~/images/icons/trash_16.png" alt=""></a></td>
                                         </tr>
                                     }

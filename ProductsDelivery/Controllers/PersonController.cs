@@ -29,16 +29,17 @@ namespace ProductsDelivery.Controllers
                 if (person.Discriminator == "User") return RedirectToAction("Index", "Home");
                 else if (person.Discriminator == "Manager") return RedirectToAction("Orders", "Manager");
                 else if (person.Discriminator == "Collector") return RedirectToAction("Orders", "Collector");
+                else if (person.Discriminator == "Delivery") return RedirectToAction("Orders", "Delivery");
+                else if (person.Discriminator == "Provider") return RedirectToAction("Applications", "Provider");
             }
             ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             return View(model);
-        }
+        }   
 
         [HttpGet]
         public IActionResult Register() => View();
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(User model)
         {
             if (model != null)
@@ -59,7 +60,6 @@ namespace ProductsDelivery.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateUser(User model)
         {
             if (model == null)

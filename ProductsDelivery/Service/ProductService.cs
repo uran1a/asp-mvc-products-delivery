@@ -32,7 +32,11 @@ namespace ProductsDelivery.Service
             }
             return uniqueProducts;
         }
-
+        public async Task AddProductAsync(Product product)
+        {
+            _db.Products.Add(product);
+            await _db.SaveChangesAsync();
+        }
         public int AmountProducts(List<Product> products)
         {
             int amount = 0;
@@ -40,12 +44,14 @@ namespace ProductsDelivery.Service
                 amount += product.Price;
             return amount;
         }
-
         public async Task<Product> ProductFindByIdAsync(int id)
         {
             return await _db.Products.SingleOrDefaultAsync(p => p.Id == id);
         }
-
+        public async Task<List<Product>> ProductsFindByProviderIdAsync(int providerId)
+        {
+            return await _db.Products.Where(p => p.ProviderId == providerId).ToListAsync();
+        }
         public async Task UpdateOrderIdAsync(int orderId, int serialCode, int count)
         {
             var products = _db.Products.Where(p => p.SerialCode == serialCode).ToList();

@@ -1,0 +1,50 @@
+﻿@model ProductsDelivery.Models.Product
+@{
+}
+<div class="col-sm-12 col-md-12 col-lg-12">
+    <form asp-action="CreateProduct" asp-controller="Provider" method="post" enctype="multipart/form-data">
+        <div class="default-form-box mb-20">
+            <label asp-for="Title">Название <span>*</span></label>
+            <input type="text" asp-for="Title" />
+            <span asp-validation-for="Title" />
+        </div>
+        <div class="default-form-box mb-20">
+            <label asp-for="Brand">Бренд <span>*</span></label>
+            <input type="text" asp-for="Brand"/>
+            <span asp-validation-for="Brand" />
+        </div>
+        <div class="default-form-box mb-20">
+            <label asp-for="Price">Цена <span>*</span></label>
+            <input type="number" asp-for="Price"/>
+            <span asp-validation-for="Price" />
+        </div>
+        <div class="default-form-box mb-20">
+            <div class="default-form-box mb-20">
+                <label for="image1">Главное изображение: <span>*</span></label>
+                <img class="img-fluid" id="image1" style="width:250px; height:250px;"/><br/><br/>
+                <input type="file" id="imgInp1" name="image"/>
+            </div>
+        </div>
+        </br>
+        <div class="save_button mt-3">
+            <button type="submit" class="btn btn-sm btn-default-outline">Добавить</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function readURL(input, id) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $(id).attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imgInp1").change(function() {
+      readURL(this, '#image1');
+    });
+</script>

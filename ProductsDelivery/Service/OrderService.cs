@@ -41,7 +41,33 @@ namespace ProductsDelivery.Service
             return _db.Orders
                 .Include(o => o.Products).SingleOrDefault(o => o.Id == order.Entity.Id);
         }
+        public async Task<List<Order>> OrdersFindByIdAndNotDeliveried(int id)
+        {
+            return await _db.Orders
+                .Include(o => o.User)
+                .Include(o => o.Products)
+                .Where(o => !o.IsDelivered)
+                .Where(o => o.DeliveryId == id).ToListAsync();
+        }
 
+        internal async Task<Order> OrderFindByUserIdAndNotFinishedAsync(int id)
+        {
+            var order = await _db.Orders
+                .Include(o => o.User)
+                .Include(o => o.Products)
+                .Where(o => !o.IsFinished)
+                .Where(o => o.UserId == id).FirstOrDefaultAsync();
+            return order;
+        }
+
+        public async Task<List<Order>> OrdersFindByIdAndDeliveried(int id)
+        {
+            return await _db.Orders
+                .Include(o => o.User)
+                .Include(o => o.Products)
+                .Where(o => o.IsDelivered)
+                .Where(o => o.DeliveryId == id).ToListAsync();
+        }
         public async Task<List<Order>> OrdersFindByIdAndNotCollected(int id)
         {
             return await _db.Orders
