@@ -1,0 +1,60 @@
+﻿@model ICollection<ProductsDelivery.Models.Order>
+@{
+    Dictionary<int, List<Product>> uniqueProducts = ViewBag.UniqueProducts; 
+}
+<div class="faq-section section-fluid-270 section-top-gap-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="faq-content">
+                    <h3 class="title">Собранные заказы</h3>
+                </div>
+            </div>
+        </div>
+        <div class="faq-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="faq-accordian">
+                        @if (@Model.Count == 0)
+                        {
+                            <h2>Нет собранных заказов</h2>
+                        }
+                        else
+                        {
+                            @foreach(var order in @Model)
+                            {
+                                <div class="faq-accordian-single-item">
+                                    <input id="item-1" name="accordian-item" type="radio" checked="">
+                                    <label for="item-1">Заказ #@order.Id</label>
+                                    <div class="item-content">
+                                        <div class="table_page table-responsive" style="margin-bottom: 10px;">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Товар</th>
+                                                        <th>Компания</th>
+                                                        <th>Количество</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach(var product in uniqueProducts[order.Id])
+                                                {   
+                                                    <tr>
+                                                        <td style="min-width: 0;">@product.Title</td>
+                                                        <td style="min-width: 0;">@product.Brand</td>   
+                                                        <td style="min-width: 0;">@product.Count</td>
+                                                    </tr>
+                                                }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

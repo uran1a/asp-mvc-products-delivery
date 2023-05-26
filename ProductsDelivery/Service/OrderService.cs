@@ -42,6 +42,38 @@ namespace ProductsDelivery.Service
                 .Include(o => o.Products).SingleOrDefault(o => o.Id == order.Entity.Id);
         }
 
+        public async Task<List<Order>> OrdersFindByIdAndNotCollected(int id)
+        {
+            return await _db.Orders
+                .Include(o => o.Products)
+                .Where(o => !o.IsCollected)
+                .Where(o => o.CollectorId == id).ToListAsync();
+        }
+        public async Task<List<Order>> OrdersFindByIdAndCollected(int id)
+        {
+            return await _db.Orders
+                .Include(o => o.Products)
+                .Where(o => o.IsCollected)
+                .Where(o => o.CollectorId == id).ToListAsync();
+        }
+
+        public async Task<List<Order>> OrdersFindById(int id)
+        {
+            return await _db.Orders
+                .Include(o => o.Products)
+                .Where(o => o.CollectorId == id).ToListAsync();
+        }
+
+        public async Task<List<Order>> OrdersForCollectorAsync()
+        {
+            return await _db.Orders
+                .Include(o => o.Products)
+                .Where(o => o.IsGenerated)
+                .Where(o => o.IsPaid)
+                .Where(o => o.IsManaged)
+                .Where(o => !o.IsCollected).ToListAsync();
+        }
+
         internal async Task<List<Order>> OrdersForManagerAsync()
         {
             return await _db.Orders
@@ -52,7 +84,6 @@ namespace ProductsDelivery.Service
                 .Where(o => o.IsGenerated)
                 .Where(o => o.IsPaid).ToListAsync();
         }
-
         public async Task DeleteProductInOrderAsync(Order order, int serial)
         {
             var product = order.Products.FirstOrDefault(p => p.SerialCode == serial);

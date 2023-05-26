@@ -28,6 +28,7 @@ namespace ProductsDelivery.Controllers
                 await Authenticate(person);
                 if (person.Discriminator == "User") return RedirectToAction("Index", "Home");
                 else if (person.Discriminator == "Manager") return RedirectToAction("Orders", "Manager");
+                else if (person.Discriminator == "Collector") return RedirectToAction("Orders", "Collector");
             }
             ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             return View(model);

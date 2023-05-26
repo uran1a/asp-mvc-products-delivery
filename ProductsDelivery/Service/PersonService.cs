@@ -77,6 +77,19 @@ namespace ProductsDelivery.Service
             await _db.SaveChangesAsync();
         }
 
+        public async Task<Collector> CollectorFindById(int id)
+        {
+            var collector = await _db.Collectors.SingleOrDefaultAsync(c => c.Id == id);
+            if (collector != null) return collector;
+            else throw new ArgumentNullException();
+        }
+
+        public async Task UpdateCollectorAsync(Collector model)
+        {
+            _db.Collectors.Update(model);
+            await _db.SaveChangesAsync();
+        }
+
         //Delivery
         public List<Provider> AllProviders() => _db.Providers.ToList();
 
