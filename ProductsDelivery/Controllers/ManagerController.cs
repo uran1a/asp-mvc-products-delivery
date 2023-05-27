@@ -13,13 +13,15 @@ namespace ProductsDelivery.Controllers
         private readonly ProductService _productService;
         private readonly OrderService _orderService;
         private readonly PersonService _personService;
+        private readonly ApplicationService _applicationService;
 
-        public ManagerController(ApplicationContext context, ProductService productService, OrderService orderService, PersonService personService)
+        public ManagerController(ApplicationContext context, ProductService productService, OrderService orderService, PersonService personService, ApplicationService applicationService)
         {
             _context = context;
             _productService = productService;
             _orderService = orderService;
             _personService = personService;
+            _applicationService = applicationService;
         }
         public async Task<IActionResult> Orders()
         {
@@ -53,6 +55,38 @@ namespace ProductsDelivery.Controllers
             }
             ViewBag.DevileryItems = devileryItems;
             return View(orders);
+        }
+        public async Task<IActionResult> Products()
+        {
+            List<Product> products = await _productService.AllProductsAsync();
+            /*Dictionary<int, List<Product>> uniqueProducts = new Dictionary<int, List<Product>>();
+            foreach (var product in products)
+            {
+                uniqueProducts.Add(product.Id, _productService.UniqueProducts(product.));
+            }
+            ViewBag.UniqueProducts = uniqueProducts;*/
+
+            List<SelectListItem> productsItems = new List<SelectListItem>();
+            foreach (var product in products)
+            {
+                productsItems.Add(new SelectListItem()
+                {
+                    Text = product.Title + " " + product.Brand,
+                    Value = product.Id.ToString()
+                });
+            }
+            ViewBag.ProductsItems = productsItems;
+            return View(products);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateApplication(int productId, int count)
+        {
+            var id = _personService.ProviderFindByProductId(productId);
+            await _applicationService.CreateApplicationAsync(new Application() { 
+                ProductId = productId, 
+                Count = count, 
+                ProviderId = id });
+            return Redirect("Products");
         }
         [HttpPost]
         public async Task<IActionResult> AcceptOrder(int orderId, int collectorId, int deliveryId)

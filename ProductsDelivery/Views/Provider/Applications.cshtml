@@ -38,13 +38,12 @@
                                                     <tr>
                                                         <td style="min-width: 0;">@application.Product.Title</td>
                                                         <td style="min-width: 0;">@application.Product.Brand</td>   
-                                                        <td style="min-width: 0;">@application.Product.Count</td>
+                                                        <td style="min-width: 0;">@application.Count</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <p>
-                                                <a asp-action="AcceptApplication" asp-controller="Provider" asp-route-id="@application.Id" class="btn btn-sm btn-radius btn-default mb-4">Принять</a>
-                                                <a asp-action="CancelApplication" asp-controller="Provider" asp-route-id="@application.Id" class="btn btn-sm btn-radius btn-default mb-4">Отклонить</a>
+                                                <a asp-action="AcceptApplication" asp-controller="Provider" asp-route-id="@application.Product.Id" asp-route-count="@application.Count" class="btn btn-sm btn-radius btn-default">Принять</a>
                                             </p>
                                         </div>
                                     </div>

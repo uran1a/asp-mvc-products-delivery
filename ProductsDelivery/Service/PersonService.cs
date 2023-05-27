@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductsDelivery.Models;
+using System.Linq;
 
 namespace ProductsDelivery.Service
 {
@@ -98,7 +99,13 @@ namespace ProductsDelivery.Service
             _db.Deliveries.Update(model);
             await _db.SaveChangesAsync();
         }
-        
+
+        public int ProviderFindByProductId(int productId)
+        {
+            var product = _db.Products.Where(p => p.Id == productId).FirstOrDefault();
+            return product.ProviderId;
+        }
+
         //Delivery
         public List<Provider> AllProviders() => _db.Providers.ToList();
 

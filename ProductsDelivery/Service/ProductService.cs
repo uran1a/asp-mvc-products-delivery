@@ -32,8 +32,25 @@ namespace ProductsDelivery.Service
             }
             return uniqueProducts;
         }
+
+        internal int SerialCodeFindByProduct(Product product)
+        {
+            var p = _db.Products.Where(p => p.Title.Equals(product.Title) && p.Brand.Equals(product.Brand)).FirstOrDefault();
+            return p.SerialCode;
+        }
+
+        public async Task AddProductsAsync(List<Product> product)
+        {
+            _db.Products.AddRange(product);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task AddProductAsync(Product product)
         {
+            int serial = await _db.Products
+                    .GroupBy(p => p.SerialCode)
+                    .Select(p => p.Count()).FirstOrDefaultAsync();
+            product.SerialCode = serial;
             _db.Products.Add(product);
             await _db.SaveChangesAsync();
         }

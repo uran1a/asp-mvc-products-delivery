@@ -51,7 +51,7 @@ namespace ProductsDelivery.Models
                 .HasForeignKey(a => a.ProductId);
 
             modelBuilder.Entity<Application>()
-                .HasOne(a => a.Product)
+                .HasOne(a => a.Provider)
                 .WithMany(p => p.Applications)
                 .HasForeignKey(a => a.ProviderId);
         }

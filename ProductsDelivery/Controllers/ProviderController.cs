@@ -24,6 +24,28 @@ namespace ProductsDelivery.Controllers
         {
             return View(_applicationService.ApplicationsFindByProviderId(int.Parse(User.Identity!.Name!)));
         }
+        public async Task<IActionResult> AcceptApplication(int id, int count)
+        {
+            var product = await _productService.ProductFindByIdAsync(id);
+            List<Product> list = new List<Product>();
+            for(int i = 0; i < count; i++)
+            {
+                list.Add(new Product
+                {
+                    SerialCode = product.SerialCode,
+                    Title = product.Title,
+                    Brand = product.Brand,
+                    Price = product.Price,
+                    Content = product.Content,
+                    ProviderId = product.ProviderId
+                });
+            }
+            /*int serail = _productService.SerialCodeFindByProduct(product);
+            product.SerialCode = serail;*/
+            await _productService.AddProductsAsync(list);
+            await _applicationService.DeleteAsync(int.Parse(User.Identity!.Name!));
+            return Redirect("Applications");
+        }
         public async Task<IActionResult> Products()
         {
             return View(await _productService.ProductsFindByProviderIdAsync(int.Parse(User.Identity!.Name!)));
