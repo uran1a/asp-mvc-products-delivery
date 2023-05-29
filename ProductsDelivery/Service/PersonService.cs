@@ -99,7 +99,6 @@ namespace ProductsDelivery.Service
             _db.Deliveries.Update(model);
             await _db.SaveChangesAsync();
         }
-
         public int ProviderFindByProductId(int productId)
         {
             var product = _db.Products.Where(p => p.Id == productId).FirstOrDefault();
@@ -108,13 +107,11 @@ namespace ProductsDelivery.Service
 
         //Delivery
         public List<Provider> AllProviders() => _db.Providers.ToList();
-
         internal async Task UpdateManagerAsync(Manager model)
         {
             _db.Managers.Update(model);
             await _db.SaveChangesAsync();
         }
-
         public async Task<Provider> CreateProviderAsync(Provider provider)
         {
             var newProvider = _db.Providers.Add(provider);

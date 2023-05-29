@@ -43,7 +43,7 @@ namespace ProductsDelivery.Controllers
             /*int serail = _productService.SerialCodeFindByProduct(product);
             product.SerialCode = serail;*/
             await _productService.AddProductsAsync(list);
-            await _applicationService.DeleteAsync(int.Parse(User.Identity!.Name!));
+            await _applicationService.DeleteAsync(product.Id);
             return Redirect("Applications");
         }
         public async Task<IActionResult> Products()

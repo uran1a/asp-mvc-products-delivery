@@ -27,7 +27,7 @@ namespace ProductsDelivery.Service
 
         internal async Task DeleteAsync(int v)
         {
-            var app = await _db.Applications.SingleOrDefaultAsync(a => a.ProviderId == v);
+            var app = await _db.Applications.SingleOrDefaultAsync(a => a.ProductId == v);
             _db.Applications.Remove(app);
             await _db.SaveChangesAsync();
         }

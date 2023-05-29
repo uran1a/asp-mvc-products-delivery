@@ -58,14 +58,7 @@ namespace ProductsDelivery.Controllers
         }
         public async Task<IActionResult> Products()
         {
-            List<Product> products = await _productService.AllProductsAsync();
-            /*Dictionary<int, List<Product>> uniqueProducts = new Dictionary<int, List<Product>>();
-            foreach (var product in products)
-            {
-                uniqueProducts.Add(product.Id, _productService.UniqueProducts(product.));
-            }
-            ViewBag.UniqueProducts = uniqueProducts;*/
-
+            List<Product> products = await _productService.AllProductsWithCountZeroAsync();
             List<SelectListItem> productsItems = new List<SelectListItem>();
             foreach (var product in products)
             {

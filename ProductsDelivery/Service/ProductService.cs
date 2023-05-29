@@ -33,6 +33,23 @@ namespace ProductsDelivery.Service
             return uniqueProducts;
         }
 
+        public async Task<List<Product>> AllProductsWithCountZeroAsync()
+        {
+            List<Product> availableProducts = await _db.Products
+                .ToListAsync();
+            List<int> uniqueSerialCode = await _db.Products
+                .GroupBy(p => p.SerialCode)
+                .Select(p => p.Key).ToListAsync();
+            List<Product> uniqueProducts = new List<Product>();
+            foreach (var serialCode in uniqueSerialCode)
+            {
+                List<Product> products = availableProducts.Where(p => p.SerialCode == serialCode).ToList();
+                Product product = products.First();
+                product.Count = products.Count;
+                uniqueProducts.Add(product);
+            }
+            return uniqueProducts;
+        }
         internal int SerialCodeFindByProduct(Product product)
         {
             var p = _db.Products.Where(p => p.Title.Equals(product.Title) && p.Brand.Equals(product.Brand)).FirstOrDefault();
@@ -47,9 +64,8 @@ namespace ProductsDelivery.Service
 
         public async Task AddProductAsync(Product product)
         {
-            int serial = await _db.Products
-                    .GroupBy(p => p.SerialCode)
-                    .Select(p => p.Count()).FirstOrDefaultAsync();
+            int serial = _db.Products
+                    .Select(p => p.SerialCode).Distinct().Count();
             product.SerialCode = serial;
             _db.Products.Add(product);
             await _db.SaveChangesAsync();
